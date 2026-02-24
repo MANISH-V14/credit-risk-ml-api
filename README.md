@@ -44,3 +44,11 @@ Data Generation → Model Training → Saved Model (.pkl)
 3. Train model  
 4. Start backend  
 5. Launch frontend  
+
+## Application Screenshots
+
+### Model Evaluation
+
+![Confusion Matrix](confusion_matrix.png)
+
+![Feature Importance](feature_importance.png)
