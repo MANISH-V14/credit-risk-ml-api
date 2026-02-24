@@ -55,4 +55,4 @@ Data Generation → Model Training → Saved Model (.pkl)
 
 ## System Architecture
 
-![Architecture](architecture.png.png)
+![Architecture](architecture.png)
