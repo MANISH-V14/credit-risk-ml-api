@@ -1,6 +1,11 @@
+
 # AI Credit Risk Scoring System
 
 An machine learning system for real-time credit risk prediction.
+## Live Demo
+
+👉 **Try the app here:**  
+https://credit-risk-ml-api-35w58ymlamuvxt5htskdv5.streamlit.app
 
 ## Overview
 
