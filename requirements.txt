@@ -8,3 +8,5 @@ streamlit
 joblib
 requests
 pydantic
+pillow
+seaborn

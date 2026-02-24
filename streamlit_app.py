@@ -1,11 +1,15 @@
 import streamlit as st
-import requests
+import joblib
+import numpy as np
 from PIL import Image
 
 st.set_page_config(page_title="Credit Risk AI System", layout="wide")
 
 st.title("💳 AI-Powered Credit Risk Scoring")
-st.markdown("This system predicts the probability of default using a machine learning model trained on synthetic financial data.")
+st.markdown("This system predicts the probability of default using a trained XGBoost model.")
+
+# Load model
+model = joblib.load("credit_model.pkl")
 
 st.markdown("---")
 
@@ -27,33 +31,26 @@ st.markdown("---")
 
 if st.button("🔍 Predict Credit Risk"):
 
-    response = requests.post(
-        "http://127.0.0.1:8000/predict",
-        json={
-            "annual_income": annual_income,
-            "loan_amount": loan_amount,
-            "credit_score": credit_score,
-            "years_employed": years_employed,
-            "existing_debt": existing_debt,
-            "num_credit_cards": num_credit_cards
-        }
-    )
+    input_data = np.array([
+        annual_income,
+        loan_amount,
+        credit_score,
+        years_employed,
+        existing_debt,
+        num_credit_cards
+    ]).reshape(1, -1)
 
-    if response.status_code == 200:
-        result = response.json()
-        probability = result["risk_probability"]
+    prediction = model.predict(input_data)[0]
+    probability = model.predict_proba(input_data)[0][1]
 
-        st.subheader("Prediction Result")
+    st.subheader("Prediction Result")
 
-        if result["prediction"] == 1:
-            st.error(f"⚠️ High Credit Risk")
-        else:
-            st.success(f"✅ Low Credit Risk")
-
-        st.metric(label="Risk Probability", value=f"{probability:.2%}")
-
+    if prediction == 1:
+        st.error("⚠️ High Credit Risk")
     else:
-        st.error("API connection failed.")
+        st.success("✅ Low Credit Risk")
+
+    st.metric(label="Risk Probability", value=f"{probability:.2%}")
 
 st.markdown("---")
 st.subheader("Model Performance")
@@ -65,11 +62,11 @@ with col3:
         cm_img = Image.open("confusion_matrix.png")
         st.image(cm_img, caption="Confusion Matrix")
     except:
-        st.write("Run training script to generate confusion matrix.")
+        st.write("Confusion matrix not found.")
 
 with col4:
     try:
         fi_img = Image.open("feature_importance.png")
         st.image(fi_img, caption="Feature Importance")
     except:
-        st.write("Run training script to generate feature importance.")
+        st.write("Feature importance not found.")
