@@ -9,4 +9,5 @@ joblib
 requests
 pydantic
 pillow
-seaborn
+seaborn 
+altair==4.2.2
