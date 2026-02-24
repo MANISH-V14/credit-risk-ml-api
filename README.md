@@ -52,3 +52,7 @@ Data Generation → Model Training → Saved Model (.pkl)
 ![Confusion Matrix](confusion_matrix.png)
 
 ![Feature Importance](feature_importance.png)
+
+## System Architecture
+
+![Architecture](architecture.png.png)
